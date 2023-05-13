@@ -1,0 +1,54 @@
+    Linux_C系统开发学习
+I/O : input & output , 是一切实现的基础
+      stdio : 标准IO
+      sysio : 系统调用IO(文件IO)
+
+stdio : FLIE类型贯穿始终
+~begin
+fopen();
+fclose();
+
+fgetc(); //mycpy
+fputc();
+fgets(); //mycpy_fgets
+fputs();
+fread();
+fwrite();
+
+printf();
+scanf();
+
+fseek();
+ftell();
+rewind();
+
+fflush();
+
+getline();
+
+临时文件 : 1、如何不冲突   2、及时销毁   
+    tmpnam
+    tmpfile
+~end
+
+
+
+文件IO/系统调用IO
+~begin
+文件描述符(fd)是在文件IO中贯穿始终的类型
+
+文件描述符的概念
+(整形数，数组下标，文件描述符优先使用当前可用范围内最小的)
+
+文件IO操作相关 : open, close, read, write, lseek
+将文件IO与标准IO的区别
+IO的效率问题
+文件共享
+原子操作
+程序中的重定向 : dup, dup2
+同步 : sync, fsync, fdatasync
+fcntl();
+ioctl();
+/dev/fd/目录 : 
+
+~end
