@@ -1,17 +1,20 @@
+/***********************************************************************
+习题 : 将mycpy.c程序进行更改，将BUFSIZE的值从128开始放大，并观察进程消耗的时间，
+注意性能最佳拐点出现时的BUFSIZE值，以及何时程序会出现问题
+***********************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#define BUFSIZE 1024
-
 int main(int argc, char* argv[])
 {
     FILE* sfd = NULL;
     FILE* dfd = NULL;
+    int BUFSIZE = 128;
     char buf[BUFSIZE];
-    int len, ret, pos;
+    int len, ret, pos, count;
     if (argc < 3)
     {
         fprintf(stderr, "Usage:%s <src_file> <dest_file>\n" ,argv[0]);
@@ -31,9 +34,15 @@ int main(int argc, char* argv[])
         perror("open()");
         exit(1);
     }
+    count = 0;
     while (1)
     {
         len = read(sfd, buf, BUFSIZE);
+        if (len == BUFSIZE) //如果读入字符数达到BUFSIZE上限，则扩大BUFSIZE
+        {
+            BUFSIZE *= 2;
+            count++;
+        }
         if (len < 0) //读文件错误
         {
             perror("read()");
