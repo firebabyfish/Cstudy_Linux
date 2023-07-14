@@ -1,0 +1,72 @@
+    Linux_C系统开发学习---I/O
+
+I/O : input & output , 是一切实现的基础
+      stdio : 标准IO
+      sysio : 系统调用IO(文件IO)
+
+stdio : FLIE类型贯穿始终
+~begin
+fopen();
+fclose();
+
+fgetc(); //mycpy
+fputc();
+fgets(); //mycpy_fgets
+fputs();
+fread();
+fwrite();
+
+printf();
+scanf();
+
+fseek();
+ftell();
+rewind();
+
+fflush();
+
+getline();
+
+临时文件 : 1、如何不冲突   2、及时销毁   
+    tmpnam
+    tmpfile
+~end
+
+
+
+文件IO/系统调用IO
+~begin
+文件描述符(fd)是在文件IO中贯穿始终的类型
+
+文件描述符的概念
+(整形数，数组下标，文件描述符优先使用当前可用范围内最小的)
+
+文件IO操作相关函数 : open, close, read, write, lseek
+
+文件IO与标准IO的区别 : 响应速度(sys) & 吞吐量(std)
+面试题 : 如何使一个程序变快？(在用户的层面上，程序变快一般指吞吐量更大，所以要多用stdio)
+提醒 : 标准IO文件和文件IO不可以混用
+转换 : fileno, fdopen
+
+IO的效率问题(time ...)(显示...命令运行时间)
+习题 : 将mycpy.c程序进行更改，将BUFSIZE的值从128开始放大，并观察进程消耗的时间，
+注意性能最佳拐点出现时的BUFSIZE值，以及何时程序会出现问题
+
+文件共享 : 多个任务共同操作一个文件或者协同完成任务
+面试题 : 写程序删除一个文件的第10行
+补充函数 : truncate/ftruncate
+
+原子操作 : 不可分割的操作
+原子 : 不可分割的最小单位
+原子操作的作用 : 解决竞争和冲突
+
+程序中的重定向 : dup, dup2
+
+同步 : sync, fsync, fdatasync
+
+fcntl() : 文件描述符所变的魔术几乎都来源于该函数
+
+ioctl() : 设备相关的内容
+
+/dev/fd/目录 : 虚目录，显示的是当前进程的文件描述符信息
+~end

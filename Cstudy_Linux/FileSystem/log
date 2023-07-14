@@ -1,0 +1,126 @@
+文件系统 : 
+
+类ls的实现，如myls，-a，-l，-i，-n
+
+一、目录和文件
+1、获取文件属性
+    stat：通过文件路径获取，面对符号链接时获取的是符号链接文件所指向文件的属性
+    fstat：通过文件描述符获取
+    lstat：面对符号链接时获取的是符号链接文件的属性
+
+2、文件访问权限
+    st_mode是一个16位的位图，用于表示文件类型，文件访问权限以及特殊权限位
+
+3、umask
+    作用：防止产生权限过松的文件
+
+4、文件权限的更改/管理
+    chmod
+    fchmod
+
+5、粘住位
+    t位
+
+6、文件系统 : FAT，UFS（复习建议重新看视频P27）
+    文件系统：文件或数据的存储和管理
+
+7、硬链接，符号链接
+    硬链接与目录项是同义词，且建立硬链接有限制：不能给分区建立，不能给目录建立。
+    符号链接优点：可跨分区，可以给目录建立
+    link  unlink
+    remove  rename
+
+8、utime
+    更改文件时间
+
+9、目录的创建和销毁
+    mkdir
+    rmdir
+
+10、更改当前工作路径
+    chdir
+    fchdir
+    getcwd
+
+11、分析目录/读取目录内容
+    glob() : 解析模式/通配符(相当于用下面的整合操作)
+
+    opendir(); //打开一个目录流
+    closedir(); //关闭一个目录流
+    readdir(); //读取打开的目录流
+    rewinddir();
+    seekdir();
+    telldir();
+
+二、系统数据文件和信息
+1、/etc/passwd
+    getpwuid(); //传用户的uid，返回一个用户的信息
+    getpwnam(); //传用户名，返回一个用户的信息
+
+2、/etc/group
+    getgrgid(); //传用户组的uid，返回一个用户组的信息
+    getgrnam(); //传用户组，返回一个用户组的信息
+
+3、/etc/shadow
+    getspnam(); 
+    crypt();
+    getpass();
+
+4、时间戳：time_t   char*   struct tm
+    time();
+    gmtime();
+    localttime();
+    mktime();
+    strftime();
+
+三、进程环境
+1、main函数
+    int main(int argc, char* argv[])
+
+2、进程的终止
+    正常终止：
+        1）从main函数返回
+        2）调用exit
+        3）调用_exit或_Exit
+        4、最后一个线程从其启动例程返回
+        5、最后一个线程调用pthread_exit
+
+    异常终止
+        1、调用abort
+        2、接到一个信号并终止
+        3、最后一个线程对其取消请求做出响应
+
+    atexit()：钩子函数
+
+3、命令行参数的分析
+    getopt();
+    getopt_long();
+
+4、环境变量
+    KEY = VALUE
+
+    getenv();
+    setenv();
+    putenv();
+
+5、C程序的存储空间布局
+    pmap(1)
+
+6、库
+    静态库
+    动态库
+    手工装载库
+    dlopen();
+    dlclose();
+    dlerror();
+    dlsym();
+
+7、函数跳转
+    goto
+    setjmp();
+    longjmp();
+
+8、资源的获取及控制
+    getrlimit();
+    setrlimit
+
