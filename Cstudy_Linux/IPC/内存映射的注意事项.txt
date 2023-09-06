@@ -1,0 +1,31 @@
+1.如果对mmap的返回值(ptr)做++操作(ptr++).munmap是否能够成功?
+    void * ptr = mmap(...);
+    ptr++; 可以对其进行++操作
+    munmap(ptr，len);// 错误,要保存地址
+
+2.如果open时O RDONLY，mmap时prot参数指定PROT READPROT WRITE会怎样?
+    错误，返回MAP_FAILED
+    open()函数中的权限建议和prot参数的权限保持一致。
+
+3.如果文件偏移量为1000会怎样?
+    偏移量必须为4096的整数倍，返回MAP_FAILED
+
+4.mmap什么情况下会调用失败?
+    - 第二个参数: length = 0
+    - 第三个参数: prot
+        - 只指定了写权限
+        - 与open不相同，一般按照open的权限设置
+        - 第5个参数fd 通过open函数时指定的 O_RDONLY / O_WRONLY
+
+5.可以open的时候O CREAT一个新文件来创建映射区吗?
+    - 可以的，但是创建的文件大小为0的话，肯定不行
+    - 可以对新文件进行扩展
+        - lseek
+        - truncate
+
+6.mmap后关闭文件描述符，对mmap映射有没有影响?
+    映射区还存在，fd被关闭没有任何影响，因为相当于copy了一份新的
+
+7.对ptr越界操作会怎样?
+    操作超出映射部分的内存
+    越界操作操作的是非法内存 -> 段错误 
